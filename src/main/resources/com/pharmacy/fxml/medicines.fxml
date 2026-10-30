@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.pharmacy.controller.MedicinesController"
+      spacing="16" styleClass="content-area">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox>
+            <Label text="كتالوج وإدارة الأدوية (Medicines Catalog)" styleClass="page-header"/>
+            <Label text="تعريف الأدوية، أسعار البيع، وحد إعادة الطلب (المخزون يُحسب تلقائياً من دفعات الشراء)" styleClass="page-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="➕ إضافة دواء جديد" styleClass="btn-primary" onAction="#handleNewMedicine"/>
+    </HBox>
+
+    <!-- Filters and Search Bar -->
+    <HBox spacing="12" styleClass="card" alignment="CENTER_LEFT">
+        <Label text="🔍 بحث:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+        <TextField fx:id="txtSearch" promptText="ابحث باسم الدواء أو الباركود الدولي..." prefWidth="280"/>
+        
+        <Label text="التصنيف:" style="-fx-font-weight: bold; -fx-text-fill: #475569; -fx-padding: 0 0 0 10px;"/>
+        <ComboBox fx:id="cmbCategoryFilter" prefWidth="160"/>
+
+        <Label text="الحالة:" style="-fx-font-weight: bold; -fx-text-fill: #475569; -fx-padding: 0 0 0 10px;"/>
+        <ComboBox fx:id="cmbStatusFilter" prefWidth="120"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="مسح الفلاتر" styleClass="btn-secondary" onAction="#handleClearFilters"/>
+    </HBox>
+
+    <!-- Medicines TableView -->
+    <VBox styleClass="card" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tblMedicines" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId" text="كود" prefWidth="55"/>
+                <TableColumn fx:id="colName" text="اسم الدواء" prefWidth="240"/>
+                <TableColumn fx:id="colCategory" text="التصنيف" prefWidth="130"/>
+                <TableColumn fx:id="colBarcode" text="الباركود" prefWidth="140"/>
+                <TableColumn fx:id="colPrice" text="سعر البيع (ج.م)" prefWidth="110"/>
+                <TableColumn fx:id="colStock" text="الرصيد المتاح" prefWidth="100"/>
+                <TableColumn fx:id="colReorder" text="حد الطلب" prefWidth="85"/>
+                <TableColumn fx:id="colStatus" text="الحالة" prefWidth="85"/>
+                <TableColumn fx:id="colActions" text="العمليات" prefWidth="160"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+</VBox>
+

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.pharmacy.controller.DashboardController"
+            fitToWidth="true" style="-fx-background-color: transparent;">
+
+    <VBox spacing="18" styleClass="content-area">
+        <!-- Header & Quick Actions -->
+        <HBox alignment="CENTER_LEFT" spacing="16">
+            <VBox>
+                <Label text="لوحة التحكم الرئيسية (Dashboard)" styleClass="page-header"/>
+                <Label text="نظرة عامة فورية على مبيعات اليوم، النواقص، وتواريخ الصلاحية الحية" styleClass="page-subtitle"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="🔄 تحديث البيانات" styleClass="btn-secondary" onAction="#refreshDashboard"/>
+        </HBox>
+
+        <!-- KPI Summary Cards -->
+        <HBox spacing="14">
+            <VBox styleClass="kpi-card, kpi-highlight-teal" HBox.hgrow="ALWAYS">
+                <Label text="إجمالي أصناف الأدوية النشطة" styleClass="kpi-title"/>
+                <Label fx:id="lblTotalMedicines" text="0" styleClass="kpi-value"/>
+            </VBox>
+            <VBox styleClass="kpi-card, kpi-highlight-blue" HBox.hgrow="ALWAYS">
+                <Label text="إجمالي الرصيد الصالح للبيع (علبة)" styleClass="kpi-title"/>
+                <Label fx:id="lblTotalStock" text="0" styleClass="kpi-value"/>
+            </VBox>
+            <VBox styleClass="kpi-card, kpi-highlight-teal" HBox.hgrow="ALWAYS">
+                <Label text="مبيعات اليوم المحصلة (ج.م)" styleClass="kpi-title"/>
+                <Label fx:id="lblTodaySales" text="0.00" styleClass="kpi-value"/>
+            </VBox>
+            <VBox styleClass="kpi-card, kpi-highlight-amber" HBox.hgrow="ALWAYS">
+                <Label text="أدوية وصلت لحد إعادة الطلب" styleClass="kpi-title"/>
+                <Label fx:id="lblLowStockCount" text="0" styleClass="kpi-value"/>
+            </VBox>
+        </HBox>
+
+        <!-- Chart: Last 7 Days Sales Trend -->
+        <VBox styleClass="card" prefHeight="260">
+            <Label text="📈 حركة المبيعات اليومية لآخر 7 أيام (EGP)" styleClass="card-title"/>
+            <BarChart fx:id="salesBarChart" legendVisible="false" prefHeight="200">
+                <xAxis>
+                    <CategoryAxis label="التاريخ (Date)"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="الإجمالي (ج.م)"/>
+                </yAxis>
+            </BarChart>
+        </VBox>
+
+        <!-- Two Data Tables: Low Stock & Expiry Radar -->
+        <HBox spacing="16">
+            <!-- Low Stock Table -->
+            <VBox styleClass="card" HBox.hgrow="ALWAYS" prefWidth="450">
+                <Label text="⚠️ تنبيهات النواقص (Low Stock Alert)" styleClass="card-title"/>
+                <TableView fx:id="tblLowStock" prefHeight="220">
+                    <columns>
+                        <TableColumn fx:id="colLowName" text="اسم الدواء" prefWidth="220"/>
+                        <TableColumn fx:id="colLowStock" text="الرصيد المتاح" prefWidth="100"/>
+                        <TableColumn fx:id="colLowLimit" text="حد الطلب" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Expiration Table -->
+            <VBox styleClass="card" HBox.hgrow="ALWAYS" prefWidth="550">
+                <Label text="⏳ رادار الصلاحية والأدوية المقتربة من الانتهاء (FEFO Radar)" styleClass="card-title"/>
+                <TableView fx:id="tblExpiry" prefHeight="220">
+                    <columns>
+                        <TableColumn fx:id="colExpName" text="اسم الدواء" prefWidth="180"/>
+                        <TableColumn fx:id="colExpBatch" text="رقم التشغيلة" prefWidth="90"/>
+                        <TableColumn fx:id="colExpDate" text="تاريخ الصلاحية" prefWidth="100"/>
+                        <TableColumn fx:id="colExpRemaining" text="المتبقي" prefWidth="70"/>
+                        <TableColumn fx:id="colExpStatus" text="الحالة" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
+    </VBox>
+
+</ScrollPane>
+

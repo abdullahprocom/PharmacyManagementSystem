@@ -1,0 +1,33 @@
+# Compiled class files & build directories
+target/
+build/
+*.class
+
+# Log files
+*.log
+hs_err_pid*
+replay_pid*
+
+# Local SQLite databases
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# NetBeans IDE
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-cache/
+
+# IntelliJ IDEA & VS Code
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+.DS_Store

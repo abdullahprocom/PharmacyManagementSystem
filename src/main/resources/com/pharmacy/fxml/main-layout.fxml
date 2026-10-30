@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.pharmacy.controller.MainLayoutController"
+            prefWidth="1180.0" prefHeight="760.0">
+
+    <!-- Left Navigation Sidebar -->
+    <left>
+        <VBox styleClass="sidebar">
+            <Label text="PharmaCare POS" styleClass="brand-label"/>
+            <Label text="Community Pharmacy Desktop" styleClass="brand-subtitle"/>
+
+            <Button fx:id="btnDashboard" text="📊  لوحة التحكم (Dashboard)" styleClass="nav-button, nav-button-active" onAction="#showDashboard"/>
+            <Button fx:id="btnSales" text="🛒  نقطة البيع (Sales POS)" styleClass="nav-button" onAction="#showSales"/>
+            <Button fx:id="btnMedicines" text="💊  الأدوية (Medicines)" styleClass="nav-button" onAction="#showMedicines"/>
+            <Button fx:id="btnPurchases" text="📦  المشتريات (Purchases)" styleClass="nav-button" onAction="#showPurchases"/>
+            <Button fx:id="btnSuppliers" text="🏢  الموردون (Suppliers)" styleClass="nav-button" onAction="#showSuppliers"/>
+            <Button fx:id="btnReports" text="📈  التقارير (Reports &amp; CSV)" styleClass="nav-button" onAction="#showReports"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <!-- System Info Footer in Sidebar -->
+            <VBox spacing="4" style="-fx-padding: 10px; -fx-background-color: #1e293b; -fx-background-radius: 6px;">
+                <Label text="Offline System Active" style="-fx-text-fill: #10b981; -fx-font-weight: bold; -fx-font-size: 11px;"/>
+                <Label text="SQLite 3 Embedded Engine" style="-fx-text-fill: #94a3b8; -fx-font-size: 10px;"/>
+                <Label text="FEFO Safety Enforced" style="-fx-text-fill: #0ea5e9; -fx-font-size: 10px;"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Center Dynamic Viewport -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area"/>
+    </center>
+
+</BorderPane>
+

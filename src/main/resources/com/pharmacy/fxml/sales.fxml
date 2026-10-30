@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.pharmacy.controller.SalesController"
+      spacing="14" styleClass="content-area">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox>
+            <Label text="شاشة الكاشير ونقطة البيع (Sales POS Terminal)" styleClass="page-header"/>
+            <Label text="صرف الأدوية الفوري مع تخصيص آلي من أقدم تشغيلة صالحة (FEFO Guarded Engine)" styleClass="page-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="lblClock" text="" style="-fx-font-size: 13px; -fx-text-fill: #64748b; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <TabPane fx:id="salesTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <!-- TAB 1: POS Cashier Terminal -->
+        <Tab text="🛒 نقطة البيع وصرف الأدوية">
+            <HBox spacing="16" style="-fx-padding: 14 0 0 0;" VBox.vgrow="ALWAYS">
+
+                <!-- LEFT COLUMN: Search & Cart Items -->
+                <VBox spacing="12" HBox.hgrow="ALWAYS">
+
+                    <!-- Fast Search & Add Bar -->
+                    <HBox spacing="10" styleClass="card" alignment="CENTER_LEFT">
+                        <Label text="🔍 باركود / دواء:" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+                        <TextField fx:id="txtBarcodeSearch" promptText="امسح الباركود أو اكتب اسم الدواء واضغط Enter..."
+                                   prefWidth="300" onAction="#handleSearchEnter"/>
+
+                        <Label text="الكمية:" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+                        <Spinner fx:id="spnQuantity" prefWidth="90" editable="true"/>
+
+                        <Button text="➕ إضافة للسلة" styleClass="btn-primary" onAction="#handleAddToCart"/>
+
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblAvailableStockPrompt" text="" style="-fx-font-weight: bold; -fx-text-fill: #0284c7;"/>
+                    </HBox>
+
+                    <!-- Quick Dropdown Selection -->
+                    <HBox spacing="10" styleClass="card" alignment="CENTER_LEFT">
+                        <Label text="أو اختر من الكتالوج:" style="-fx-font-weight: bold; -fx-text-fill: #64748b;"/>
+                        <ComboBox fx:id="cmbQuickMedicine" promptText="اختر دواء يحتوي رصيداً صالحاً للبيع..." prefWidth="300"/>
+                        <Button text="اختيار الصنف" styleClass="btn-secondary" onAction="#handleQuickSelect"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="🔄 تحديث الأرصدة" styleClass="btn-secondary" onAction="#loadSellableMedicines"/>
+                    </HBox>
+
+                    <!-- Shopping Cart TableView -->
+                    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="8">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="🛒 محتويات سلة البيع الحالية:" styleClass="card-title"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="🗑️ تفريغ السلة" styleClass="btn-secondary" onAction="#handleClearCart"/>
+                        </HBox>
+
+                        <TableView fx:id="tblCart" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colCartName" text="اسم الدواء" prefWidth="250"/>
+                                <TableColumn fx:id="colCartPrice" text="سعر الوحدة (ج.م)" prefWidth="130"/>
+                                <TableColumn fx:id="colCartQty" text="الكمية المطلوبة" prefWidth="110"/>
+                                <TableColumn fx:id="colCartTotal" text="الإجمالي (ج.م)" prefWidth="140"/>
+                                <TableColumn fx:id="colCartAction" text="حذف" prefWidth="85"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </VBox>
+
+                <!-- RIGHT COLUMN: Payment & Checkout Panel -->
+                <VBox spacing="14" prefWidth="350" styleClass="card">
+                    <Label text="ملخص الفاتورة والدفع" styleClass="card-title" style="-fx-font-size: 16px;"/>
+
+                    <!-- Payment Method (CASH or CARD) -->
+                    <VBox spacing="4">
+                        <Label text="طريقة الدفع (Payment Method): *" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+                        <ComboBox fx:id="cmbPaymentMethod" prefWidth="330"/>
+                    </VBox>
+
+                    <!-- Subtotal -->
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="المجموع الفرعي:" style="-fx-font-size: 14px; -fx-text-fill: #475569;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblSubtotal" text="0.00 ج.م" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b;"/>
+                    </HBox>
+
+                    <!-- Discount Percent -->
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="نسبة الخصم (%):" style="-fx-font-size: 13px; -fx-text-fill: #475569;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="txtDiscountPercent" text="0" prefWidth="75" alignment="CENTER_RIGHT"/>
+                    </HBox>
+
+                    <!-- Discount Value -->
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="قيمة الخصم:" style="-fx-font-size: 13px; -fx-text-fill: #dc2626;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblDiscountAmount" text="0.00 ج.م" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #dc2626;"/>
+                    </HBox>
+
+                    <Separator/>
+
+                    <!-- Grand Total Net -->
+                    <VBox spacing="4" style="-fx-background-color: #f1f5f9; -fx-padding: 12px; -fx-background-radius: 6px;">
+                        <Label text="المبلغ المطلوب سداده:" style="-fx-font-size: 13px; -fx-text-fill: #0f172a; -fx-font-weight: bold;"/>
+                        <Label fx:id="lblNetTotal" text="0.00 ج.م" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0d9488;"/>
+                    </VBox>
+
+                    <!-- Paid Amount -->
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="المدفوع نقداً:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #334155;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="txtPaidAmount" promptText="0.00" prefWidth="130" alignment="CENTER_RIGHT"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    </HBox>
+
+                    <!-- Change Due -->
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="المتبقي للعميل (الباقي):" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblChangeDue" text="0.00 ج.م" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0284c7;"/>
+                    </HBox>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+
+                    <!-- Checkout Action Button -->
+                    <Button text="✅ إتمام البيع وخصم المخزون (FEFO)" prefHeight="48" maxWidth="Infinity"
+                            styleClass="btn-success" style="-fx-font-size: 14px;" onAction="#handleCompleteSale"/>
+                </VBox>
+
+            </HBox>
+        </Tab>
+
+        <!-- TAB 2: Sales History -->
+        <Tab text="📋 سجل فواتير المبيعات السابقة">
+            <VBox spacing="14" style="-fx-padding: 14 0 0 0;">
+                <HBox spacing="12" styleClass="card" alignment="CENTER_LEFT">
+                    <Label text="🔍 بحث في الفواتير:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                    <TextField fx:id="txtSearchSalesHistory" promptText="ابحث برقم الفاتورة أو التاريخ..." prefWidth="280"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="🔄 تحديث السجل" styleClass="btn-secondary" onAction="#loadSalesHistory"/>
+                </HBox>
+
+                <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tblSalesHistory" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colHistSaleId" text="رقم الفاتورة" prefWidth="90"/>
+                            <TableColumn fx:id="colHistSaleDate" text="التاريخ والوقت" prefWidth="180"/>
+                            <TableColumn fx:id="colHistSaleMethod" text="طريقة الدفع" prefWidth="130"/>
+                            <TableColumn fx:id="colHistSaleTotal" text="المبلغ الإجمالي (ج.م)" prefWidth="160"/>
+                            <TableColumn fx:id="colHistSaleActions" text="تفاصيل البنود والتشغيلات" prefWidth="180"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </Tab>
+    </TabPane>
+
+</VBox>
+

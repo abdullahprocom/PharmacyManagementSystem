@@ -1,0 +1,374 @@
+/* ==========================================================================
+   PharmaCare Desktop POS & Inventory System — Professional Modern UI
+   Palette: Dark Navy Sidebar (#0f172a), Crisp Background (#f8fafc),
+            Pure White Cards (#ffffff), Emerald/Teal Primary Accent (#0d9488)
+   ========================================================================== */
+
+.root {
+    -fx-font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    -fx-font-size: 13.5px;
+    -fx-background-color: #f8fafc;
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar & Navigation
+   -------------------------------------------------------------------------- */
+.sidebar {
+    -fx-background-color: #0f172a;
+    -fx-pref-width: 235px;
+    -fx-padding: 22px 14px;
+    -fx-spacing: 8px;
+}
+
+.brand-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 4px 10px;
+}
+
+.brand-subtitle {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 11.5px;
+    -fx-padding: 0 0 18px 10px;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #cbd5e1;
+    -fx-font-size: 13.5px;
+    -fx-font-weight: 600;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 11px 16px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-max-width: Infinity;
+}
+
+.nav-button:hover {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: #ffffff;
+}
+
+.nav-button-active {
+    -fx-background-color: #0d9488;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* --------------------------------------------------------------------------
+   Content Area & Cards
+   -------------------------------------------------------------------------- */
+.content-area {
+    -fx-background-color: #f8fafc;
+    -fx-padding: 22px;
+}
+
+.card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+    -fx-padding: 18px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 6, 0, 0, 2);
+}
+
+.card-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+    -fx-padding: 0 0 10px 0;
+}
+
+.page-header {
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+}
+
+.page-subtitle {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #64748b;
+    -fx-padding: 2px 0 12px 0;
+}
+
+/* --------------------------------------------------------------------------
+   KPI Metric Cards
+   -------------------------------------------------------------------------- */
+.kpi-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 10px;
+    -fx-padding: 16px;
+    -fx-pref-width: 220px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 4, 0, 0, 1);
+}
+
+.kpi-title {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+    -fx-font-weight: 600;
+}
+
+.kpi-value {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+    -fx-padding: 4px 0 0 0;
+}
+
+.kpi-highlight-teal { -fx-border-color: #0d9488; -fx-border-width: 0 0 0 5px; }
+.kpi-highlight-blue { -fx-border-color: #0284c7; -fx-border-width: 0 0 0 5px; }
+.kpi-highlight-amber { -fx-border-color: #f59e0b; -fx-border-width: 0 0 0 5px; }
+.kpi-highlight-red { -fx-border-color: #ef4444; -fx-border-width: 0 0 0 5px; }
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+.btn-primary {
+    -fx-background-color: #0d9488;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 9px 18px;
+    -fx-background-radius: 7px;
+    -fx-cursor: hand;
+}
+.btn-primary:hover { -fx-background-color: #0f766e; }
+
+.btn-secondary {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #334155;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 9px 18px;
+    -fx-background-radius: 7px;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 7px;
+    -fx-cursor: hand;
+}
+.btn-secondary:hover { -fx-background-color: #e2e8f0; }
+
+.btn-success {
+    -fx-background-color: #10b981;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 13.5px;
+    -fx-padding: 10px 22px;
+    -fx-background-radius: 7px;
+    -fx-cursor: hand;
+}
+.btn-success:hover { -fx-background-color: #059669; }
+
+.btn-danger {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 9px 18px;
+    -fx-background-radius: 7px;
+    -fx-cursor: hand;
+}
+.btn-danger:hover { -fx-background-color: #dc2626; }
+
+/* --------------------------------------------------------------------------
+   Inputs & Controls
+   -------------------------------------------------------------------------- */
+.text-field, .combo-box, .date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 7px 12px;
+    -fx-font-size: 13.5px;
+}
+
+.text-field:focused, .combo-box:focused, .date-picker:focused {
+    -fx-border-color: #0d9488;
+    -fx-border-width: 1.5px;
+}
+
+/* --------------------------------------------------------------------------
+   TableViews — Generous Row Height & Crystal Clear High-Contrast Selection
+   -------------------------------------------------------------------------- */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-fixed-cell-size: 46px; /* Generous 46px height completely fixes Arabic text clipping */
+    -fx-selection-bar: #0f172a; /* High-contrast Dark Navy Selection */
+    -fx-selection-bar-non-focused: #1e293b;
+    -fx-selection-bar-text: #ffffff;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8px 8px 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 1px 1px 0;
+    -fx-pref-height: 42px;
+    -fx-padding: 0 12px;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .table-cell {
+    -fx-padding: 0 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 13.5px;
+    -fx-text-fill: #1e293b;
+    -fx-border-color: #f1f5f9;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f8fafc;
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+/* High Contrast Selected Row: Dark Navy (#0f172a) with Bright White Text (#ffffff) */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #0f172a !important;
+}
+
+.table-view .table-row-cell:selected .table-cell {
+    -fx-text-fill: #ffffff !important;
+}
+
+.table-view .table-row-cell:selected .table-cell .label {
+    -fx-text-fill: #ffffff !important;
+}
+
+.table-view .table-row-cell:selected .text {
+    -fx-fill: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   TabPane Modern Styling
+   -------------------------------------------------------------------------- */
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #e2e8f0;
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-padding: 8px 20px;
+    -fx-cursor: hand;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #0d9488;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: #334155;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* --------------------------------------------------------------------------
+   Badges & Tags
+   -------------------------------------------------------------------------- */
+.badge-active {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #15803d;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 10px;
+    -fx-background-radius: 6px;
+    -fx-font-size: 11.5px;
+    -fx-border-color: #86efac;
+    -fx-border-radius: 6px;
+}
+
+.badge-inactive {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #b91c1c;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 10px;
+    -fx-background-radius: 6px;
+    -fx-font-size: 11.5px;
+    -fx-border-color: #fca5a5;
+    -fx-border-radius: 6px;
+}
+
+.badge-expired {
+    -fx-background-color: #fef2f2;
+    -fx-text-fill: #dc2626;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 10px;
+    -fx-background-radius: 6px;
+    -fx-font-size: 11.5px;
+    -fx-border-color: #fca5a5;
+    -fx-border-radius: 6px;
+}
+
+.badge-warning {
+    -fx-background-color: #fffbeb;
+    -fx-text-fill: #d97706;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 10px;
+    -fx-background-radius: 6px;
+    -fx-font-size: 11.5px;
+    -fx-border-color: #fde68a;
+    -fx-border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Table Inline Action Buttons
+   -------------------------------------------------------------------------- */
+.tbl-btn-edit {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #0284c7;
+    -fx-font-weight: bold;
+    -fx-font-size: 11.5px;
+    -fx-padding: 4px 10px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #bae6fd;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+.tbl-btn-edit:hover {
+    -fx-background-color: #0284c7;
+    -fx-text-fill: #ffffff;
+}
+
+.tbl-btn-toggle {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #475569;
+    -fx-font-weight: bold;
+    -fx-font-size: 11.5px;
+    -fx-padding: 4px 10px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+.tbl-btn-toggle:hover {
+    -fx-background-color: #334155;
+    -fx-text-fill: #ffffff;
+}

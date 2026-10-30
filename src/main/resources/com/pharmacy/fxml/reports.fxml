@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.pharmacy.controller.ReportsController"
+      spacing="14" styleClass="content-area">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox>
+            <Label text="التقارير الشاملة وتصدير البيانات (Reports &amp; CSV Export)" styleClass="page-header"/>
+            <Label text="كشوفات المبيعات، المشتريات، رصيد النواقص، والصلاحيات مع إمكانية التصدير المباشر لملفات Excel/CSV" styleClass="page-subtitle"/>
+        </VBox>
+    </HBox>
+
+    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <!-- TAB 1: Sales Report -->
+        <Tab text="📊 تقرير المبيعات والإيرادات">
+            <VBox spacing="12" style="-fx-padding: 14 0 0 0;">
+                <HBox spacing="12" styleClass="card" alignment="CENTER_LEFT">
+                    <Label text="من تاريخ:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                    <DatePicker fx:id="dpSalesFrom" prefWidth="140"/>
+
+                    <Label text="إلى تاريخ:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                    <DatePicker fx:id="dpSalesTo" prefWidth="140"/>
+
+                    <Button text="🔍 استعراض التقرير" styleClass="btn-primary" onAction="#handleFilterSalesReport"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="📥 تصدير إلى CSV" styleClass="btn-secondary" onAction="#handleExportSalesCSV"/>
+                </HBox>
+
+                <!-- Sales Summary Banner -->
+                <HBox spacing="16">
+                    <VBox styleClass="kpi-card, kpi-highlight-teal" HBox.hgrow="ALWAYS">
+                        <Label text="عدد فواتير البيع" styleClass="kpi-title"/>
+                        <Label fx:id="lblSalesReportCount" text="0" styleClass="kpi-value"/>
+                    </VBox>
+                    <VBox styleClass="kpi-card, kpi-highlight-blue" HBox.hgrow="ALWAYS">
+                        <Label text="إجمالي الإيرادات المحصلة (ج.م)" styleClass="kpi-title"/>
+                        <Label fx:id="lblSalesReportTotal" text="0.00" styleClass="kpi-value"/>
+                    </VBox>
+                </HBox>
+
+                <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tblSalesReport" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colRepSaleId" text="رقم الفاتورة" prefWidth="90"/>
+                            <TableColumn fx:id="colRepSaleDate" text="التاريخ والوقت" prefWidth="240"/>
+                            <TableColumn fx:id="colRepSaleMethod" text="طريقة الدفع" prefWidth="150"/>
+                            <TableColumn fx:id="colRepSaleTotal" text="الصافي المحصل (ج.م)" prefWidth="180"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </Tab>
+
+        <!-- TAB 2: Purchases Report -->
+        <Tab text="📦 تقرير المشتريات والتوريد">
+            <VBox spacing="12" style="-fx-padding: 14 0 0 0;">
+                <HBox spacing="12" styleClass="card" alignment="CENTER_LEFT">
+                    <Label text="من تاريخ:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                    <DatePicker fx:id="dpPurchasesFrom" prefWidth="140"/>
+
+                    <Label text="إلى تاريخ:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                    <DatePicker fx:id="dpPurchasesTo" prefWidth="140"/>
+
+                    <Button text="🔍 استعراض التقرير" styleClass="btn-primary" onAction="#handleFilterPurchasesReport"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="📥 تصدير إلى CSV" styleClass="btn-secondary" onAction="#handleExportPurchasesCSV"/>
+                </HBox>
+
+                <HBox spacing="16">
+                    <VBox styleClass="kpi-card, kpi-highlight-amber" HBox.hgrow="ALWAYS">
+                        <Label text="عدد شحنات التوريد" styleClass="kpi-title"/>
+                        <Label fx:id="lblPurchasesReportCount" text="0" styleClass="kpi-value"/>
+                    </VBox>
+                    <VBox styleClass="kpi-card, kpi-highlight-teal" HBox.hgrow="ALWAYS">
+                        <Label text="إجمالي المبالغ المصروفة (ج.م)" styleClass="kpi-title"/>
+                        <Label fx:id="lblPurchasesReportTotal" text="0.00" styleClass="kpi-value"/>
+                    </VBox>
+                </HBox>
+
+                <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tblPurchasesReport" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colRepPurId" text="كود العملية" prefWidth="90"/>
+                            <TableColumn fx:id="colRepPurInvoice" text="رقم الفاتورة" prefWidth="160"/>
+                            <TableColumn fx:id="colRepPurSupplier" text="المورد / الشركة" prefWidth="260"/>
+                            <TableColumn fx:id="colRepPurDate" text="تاريخ الشراء" prefWidth="150"/>
+                            <TableColumn fx:id="colRepPurTotal" text="إجمالي الفاتورة (ج.م)" prefWidth="170"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </Tab>
+
+        <!-- TAB 3: Low Stock Report -->
+        <Tab text="⚠️ تقرير النواقص وحد إعادة الطلب">
+            <VBox spacing="12" style="-fx-padding: 14 0 0 0;">
+                <HBox spacing="12" styleClass="card" alignment="CENTER_LEFT">
+                    <Label text="الأدوية التي وصل رصيدها إلى أو أقل من حد الأمان وإعادة الطلب" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="🔄 تحديث" styleClass="btn-secondary" onAction="#loadLowStockReport"/>
+                    <Button text="📥 تصدير إلى CSV" styleClass="btn-secondary" onAction="#handleExportLowStockCSV"/>
+                </HBox>
+
+                <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tblLowStockReport" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colRepLowId" text="كود" prefWidth="70"/>
+                            <TableColumn fx:id="colRepLowName" text="اسم الدواء" prefWidth="260"/>
+                            <TableColumn fx:id="colRepLowCategory" text="التصنيف" prefWidth="150"/>
+                            <TableColumn fx:id="colRepLowStock" text="الرصيد المتاح حالياً" prefWidth="140"/>
+                            <TableColumn fx:id="colRepLowLimit" text="حد الطلب" prefWidth="120"/>
+                            <TableColumn fx:id="colRepLowPrice" text="سعر البيع (ج.م)" prefWidth="130"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </Tab>
+
+        <!-- TAB 4: Expiry Radar Report -->
+        <Tab text="⏳ تقرير رادار الصلاحيات">
+            <VBox spacing="12" style="-fx-padding: 14 0 0 0;">
+                <HBox spacing="12" styleClass="card" alignment="CENTER_LEFT">
+                    <Label text="فلترة النطاق الزمني للصلاحية:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                    <ComboBox fx:id="cmbExpiryFilter" prefWidth="180"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="🔄 تحديث" styleClass="btn-secondary" onAction="#loadExpiryReport"/>
+                    <Button text="📥 تصدير إلى CSV" styleClass="btn-secondary" onAction="#handleExportExpiryCSV"/>
+                </HBox>
+
+                <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tblExpiryReport" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colRepExpName" text="اسم الدواء" prefWidth="260"/>
+                            <TableColumn fx:id="colRepExpBatch" text="رقم التشغيلة (Batch)" prefWidth="140"/>
+                            <TableColumn fx:id="colRepExpDate" text="تاريخ الصلاحية" prefWidth="140"/>
+                            <TableColumn fx:id="colRepExpRemaining" text="الكمية المتبقية" prefWidth="120"/>
+                            <TableColumn fx:id="colRepExpStatus" text="الحالة" prefWidth="130"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </Tab>
+    </TabPane>
+
+</VBox>
+

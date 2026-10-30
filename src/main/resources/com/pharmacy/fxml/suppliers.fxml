@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.pharmacy.controller.SuppliersController"
+      spacing="16" styleClass="content-area">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox>
+            <Label text="سجل وإدارة الموردين (Suppliers Management)" styleClass="page-header"/>
+            <Label text="إدارة بيانات موردي وشركات الأدوية ومتابعة أرقام الاتصال والعناوين وحالة التفعيل" styleClass="page-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="➕ إضافة مورد جديد" styleClass="btn-primary" onAction="#handleNewSupplier"/>
+    </HBox>
+
+    <!-- Filters & Search Bar -->
+    <HBox spacing="12" styleClass="card" alignment="CENTER_LEFT">
+        <Label text="🔍 بحث:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+        <TextField fx:id="txtSearch" promptText="ابحث باسم المورد أو رقم الهاتف أو العنوان..." prefWidth="320"/>
+
+        <Label text="الحالة:" style="-fx-font-weight: bold; -fx-text-fill: #475569; -fx-padding: 0 0 0 10px;"/>
+        <ComboBox fx:id="cmbStatusFilter" prefWidth="140"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="🔄 تحديث" styleClass="btn-secondary" onAction="#loadSuppliers"/>
+    </HBox>
+
+    <!-- Suppliers TableView -->
+    <VBox styleClass="card" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tblSuppliers" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId" text="كود" prefWidth="70"/>
+                <TableColumn fx:id="colName" text="اسم الشركة / المورد" prefWidth="280"/>
+                <TableColumn fx:id="colPhone" text="رقم الهاتف" prefWidth="180"/>
+                <TableColumn fx:id="colAddress" text="العنوان / المقر" prefWidth="250"/>
+                <TableColumn fx:id="colStatus" text="الحالة" prefWidth="110"/>
+                <TableColumn fx:id="colActions" text="العمليات" prefWidth="160"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+</VBox>
+

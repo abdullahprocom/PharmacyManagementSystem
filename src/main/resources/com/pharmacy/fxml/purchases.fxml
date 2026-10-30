@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.pharmacy.controller.PurchasesController"
+      spacing="16" styleClass="content-area">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox>
+            <Label text="سجل وفواتير المشتريات (Purchases &amp; Receiving)" styleClass="page-header"/>
+            <Label text="تسجيل استلام الشحنات الدوائية، رقم التشغيلة، وتاريخ الصلاحية لزيادة الرصيد المخزني" styleClass="page-subtitle"/>
+        </VBox>
+    </HBox>
+
+    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <!-- TAB 1: New Purchase Invoice -->
+        <Tab text="➕ تسجيل فاتورة توريد جديدة">
+            <VBox spacing="14" style="-fx-padding: 16 0 0 0;">
+                
+                <!-- Supplier and Invoice Header Info -->
+                <HBox spacing="16" styleClass="card" alignment="CENTER_LEFT">
+                    <VBox spacing="4" prefWidth="280">
+                        <Label text="المورد / الشركة: *" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+                        <ComboBox fx:id="cmbSupplier" promptText="اختر شركة التوريد..." prefWidth="280"/>
+                    </VBox>
+
+                    <VBox spacing="4" prefWidth="200">
+                        <Label text="رقم إذن الاستلام / الفاتورة:" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+                        <TextField fx:id="txtInvoiceNumber" promptText="مثال: INV-2024-901" prefWidth="200"/>
+                    </VBox>
+
+                    <VBox spacing="4" prefWidth="160">
+                        <Label text="تاريخ الشراء / الاستلام:" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+                        <DatePicker fx:id="dpPurchaseDate" prefWidth="160"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Add Item Form -->
+                <VBox spacing="10" styleClass="card">
+                    <Label text="إضافة صنف دواء إلى الفاتورة (Batch &amp; Item Details)" styleClass="card-title"/>
+                    <GridPane hgap="12" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints prefWidth="240"/>
+                            <ColumnConstraints prefWidth="130"/>
+                            <ColumnConstraints prefWidth="130"/>
+                            <ColumnConstraints prefWidth="100"/>
+                            <ColumnConstraints prefWidth="110"/>
+                            <ColumnConstraints prefWidth="120"/>
+                        </columnConstraints>
+
+                        <!-- Row 0: Labels -->
+                        <Label text="اختر الدواء *" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                        <Label text="رقم التشغيلة (Batch) *" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                        <Label text="تاريخ الصلاحية *" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                        <Label text="الكمية (علبة) *" GridPane.columnIndex="3" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                        <Label text="سعر الشراء (ج.م) *" GridPane.columnIndex="4" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                        <Label text="إجراء" GridPane.columnIndex="5" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+
+                        <!-- Row 1: Inputs -->
+                        <ComboBox fx:id="cmbMedicine" promptText="اختر دواء..." prefWidth="240" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <TextField fx:id="txtBatchNumber" promptText="مثال: B2024" prefWidth="130" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <DatePicker fx:id="dpExpiryDate" prefWidth="130" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <TextField fx:id="txtQuantity" promptText="مثال: 50" prefWidth="100" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                        <TextField fx:id="txtCostPrice" promptText="0.00" prefWidth="110" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                        <Button text="➕ إضافة للبند" styleClass="btn-primary" onAction="#handleAddItem" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+                    </GridPane>
+                </VBox>
+
+                <!-- Current Invoice Items Table -->
+                <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="8">
+                    <Label text="أصناف الفاتورة الحالية:" styleClass="card-title"/>
+                    <TableView fx:id="tblNewItems" VBox.vgrow="ALWAYS" prefHeight="220">
+                        <columns>
+                            <TableColumn fx:id="colItemName" text="اسم الدواء" prefWidth="240"/>
+                            <TableColumn fx:id="colItemBatch" text="رقم التشغيلة (Batch)" prefWidth="140"/>
+                            <TableColumn fx:id="colItemExpiry" text="تاريخ الصلاحية" prefWidth="120"/>
+                            <TableColumn fx:id="colItemQty" text="الكمية" prefWidth="90"/>
+                            <TableColumn fx:id="colItemCost" text="سعر الشراء (ج.م)" prefWidth="120"/>
+                            <TableColumn fx:id="colItemTotal" text="الإجمالي (ج.م)" prefWidth="130"/>
+                            <TableColumn fx:id="colItemAction" text="حذف" prefWidth="90"/>
+                        </columns>
+                    </TableView>
+
+                    <!-- Invoice Summary & Action -->
+                    <HBox alignment="CENTER_RIGHT" spacing="20" style="-fx-padding: 8 0 0 0;">
+                        <Label fx:id="lblItemsCount" text="عدد الأصناف: 0" style="-fx-font-weight: bold; -fx-text-fill: #475569; -fx-font-size: 14px;"/>
+                        <Label text="إجمالي الفاتورة:" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #0f172a;"/>
+                        <Label fx:id="lblGrandTotal" text="0.00 ج.م" style="-fx-font-weight: bold; -fx-font-size: 20px; -fx-text-fill: #0d9488;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="🗑️ مسح الكل" styleClass="btn-secondary" onAction="#handleClearInvoice"/>
+                        <Button text="💾 ترحيل وحفظ فاتورة الشراء وتحديث المخزون" styleClass="btn-success" onAction="#handleSavePurchase"/>
+                    </HBox>
+                </VBox>
+
+            </VBox>
+        </Tab>
+
+        <!-- TAB 2: Historical Purchases -->
+        <Tab text="📋 سجل الفواتير والمشتريات السابقة">
+            <VBox spacing="14" style="-fx-padding: 16 0 0 0;">
+                <HBox spacing="12" styleClass="card" alignment="CENTER_LEFT">
+                    <Label text="🔍 بحث في الفواتير:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                    <TextField fx:id="txtSearchHistory" promptText="ابحث برقم الفاتورة أو اسم المورد..." prefWidth="300"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="🔄 تحديث السجل" styleClass="btn-secondary" onAction="#loadHistory"/>
+                </HBox>
+
+                <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tblHistory" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colHistId" text="رقم العملية" prefWidth="85"/>
+                            <TableColumn fx:id="colHistInvoice" text="رقم الفاتورة" prefWidth="150"/>
+                            <TableColumn fx:id="colHistSupplier" text="المورد / الشركة" prefWidth="250"/>
+                            <TableColumn fx:id="colHistDate" text="تاريخ الشراء" prefWidth="130"/>
+                            <TableColumn fx:id="colHistTotal" text="إجمالي الفاتورة (ج.م)" prefWidth="150"/>
+                            <TableColumn fx:id="colHistItems" text="عدد الأصناف" prefWidth="100"/>
+                            <TableColumn fx:id="colHistActions" text="تفاصيل البنود" prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </Tab>
+    </TabPane>
+
+</VBox>
+
